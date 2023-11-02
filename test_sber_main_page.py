@@ -3,6 +3,11 @@ from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
+#для возможности ожидать загружающийся элемент:
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+#для использования кнопок:
+from selenium.webdriver.common.keys import Keys
 
 def test_elements_sber_main_page():
    # driver = webdriver.Chrome('/usr/local/bin/chromedriver/chromedriver')
@@ -28,10 +33,12 @@ def test_elements_sber_main_page():
     driver.find_element_by_xpath("//a[text()=\"ENG\"]")
     driver.find_element_by_xpath("//a[@aria-label=\"Открыть поиск по сайту\"]")
 
-    #Выполнение действий с найденными элементами:
-    #sberonline_button = driver.find_element_by_xpath("//a[text()=\"СберБанк Онлайн\"]")
-    #sberonline_button.click()
-    #time.sleep(5)
+    #Выполнение действий с найденными элементами - и возврат на предыдущую вкладку:
+    sberonline_button = driver.find_element_by_xpath("//a[text()=\"СберБанк Онлайн\"]")
+    sberonline_button.click()
+    time.sleep(5)
+    driver.switch_to.window(driver.window_handles[0])
+    time.sleep(5)
 
     #button_individ = driver.find_element_by_xpath("//a[text()=\"СберБанк Онлайн\"]")
     #Имитируем наведение мыши для получения всплывающей подсказки
@@ -75,6 +82,15 @@ def test_elements_sber_main_page():
     button_search = driver.find_element_by_xpath("//a[@aria-label=\"Открыть поиск по сайту\"]")
     ActionChains(driver).move_to_element(button_search).perform()
     time.sleep(5)
+
+    #Ожидаем доступности элемента и только потом нажимаем на него:
+    button = WebDriverWait(driver, 15).until(EC.element_to_be_clickable((By.XPATH, "//a[@title=\"Изменить регион\"]")))
+    button.click()
+
+    #Прокрутим страницу вниз:
+    driver.find_element_by_tag_name('body').send_keys(Keys.END)
+    time.sleep(5)
+
 
 
 # тест проверяет переключения на английский язык
@@ -128,3 +144,37 @@ def test_check_search_sber_main_page():
     #Ищем элемент Закрыть поиск:
     close_search_button = driver.find_element_by_xpath("//button[text()='Закрыть поиск']")
     close_search_button.click()
+
+#Домашнее задание: тест  на проверку скроллинга и переключения между вкладками.
+def test_change_tab_and_scroll():
+    driver = webdriver.Chrome('/Users/20071554/Downloads/SberBrowserDriver_9.2.36.0-macos')
+    driver.implicitly_wait(10)
+    # Открываем главную страницу
+    driver.get("http://www.sberbank.ru/")
+    # Раскрываем окно на полный экран
+    driver.maximize_window()
+    # Ожидаем 5 секунд для прорисовки
+    time.sleep(5)
+    sberonline_button = driver.find_element_by_xpath("//a[text()=\"СберБанк Онлайн\"]")
+    sberonline_button.click()
+    time.sleep(5)
+    #из новой открытой вкладки возвращаемся в исходную
+    driver.switch_to.window(driver.window_handles[0])
+    time.sleep(5)
+    #затем снова в новую вкладку и снова возвращеаемся назад:
+    driver.switch_to.window(driver.window_handles[1])
+    time.sleep(5)
+    driver.switch_to.window(driver.window_handles[0])
+    time.sleep(5)
+    #скролл вниз на один экран
+    driver.find_element_by_tag_name('body').send_keys(Keys.PAGE_DOWN)
+    time.sleep(5)
+    #скролл вниз до футера
+    driver.find_element_by_tag_name('body').send_keys(Keys.END)
+    time.sleep(5)
+    #скролл вверх на один экран
+    driver.find_element_by_tag_name('body').send_keys(Keys.PAGE_UP)
+    time.sleep(5)
+    #скрол вверх до хедера
+    driver.find_element_by_tag_name('body').send_keys(Keys.HOME)
+    time.sleep(5)
