@@ -134,16 +134,24 @@ def test_check_search_sber_main_page():
     search_field = driver.find_element_by_xpath("//input[@aria-label=\"Поиск по сайту\"]")
     search_field.send_keys("Кабриолет салатовый")
     time.sleep(5)
-    #Пробуем найти это слово в выпадающем списке и видим, что он пуст
+    #Пробуем найти это слово в выпадающем списке и видим, вариантов нужных нет
     try:
         search_name_button = driver.find_element_by_xpath("//button[text() = \"Кабриолет салатовый\"]")
     except:
         print("Не нашел ничего по поиску \"Кабриолет салатовый\"")
-
     time.sleep(5)
     #Ищем элемент Закрыть поиск:
     close_search_button = driver.find_element_by_xpath("//button[text()='Закрыть поиск']")
     close_search_button.click()
+    #Реализуем подсчет элементов, удовлетворяющих условию поиска:
+    exchange_rates_count = driver.find_elements_by_xpath("//a[text()=\"Курсы валют\"]")
+    print("count курсы валют =", len(exchange_rates_count))
+
+    #Посчитаем количество элементов Офисы и Банкоматы
+    offices_rates_count = driver.find_elements_by_xpath("//a[text()=\"Офисы\"]")
+    print("count офисы =", len(offices_rates_count))
+    bankomates_rates_count = driver.find_elements_by_xpath("//a[text()=\"Банкоматы\"]")
+    print("count банкоматы =", len(bankomates_rates_count))
 
 #Домашнее задание: тест  на проверку скроллинга и переключения между вкладками.
 def test_change_tab_and_scroll():
