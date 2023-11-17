@@ -225,9 +225,9 @@ def test_moving_menu_links_exchange():
         exchange_rates_button = driver.find_element_by_xpath("//a[text()=\"Курсы валют\"]")
         exchange_rates_button.click()
         time.sleep(5)
-        first_page_title = driver.find_element_by_xpath("(//title")
+        first_page_title = driver.find_element_by_xpath("(//h1)[1]")
         print(first_page_title.text)
-        assert first_page_title.text == "Курсы валют на сегодня онлайн: курс покупки и продажи валюты"
+        assert first_page_title.text == "Курсы валют"
     finally:
         driver.quit()
 
@@ -279,7 +279,7 @@ def test_moving_menu_links_boxes():
 #параметризованный тест для проверки перехода с главной страницы по пунктам меню
 @pytest.mark.parametrize('element_menu, element_title, element_text',
                          [
-                          ("//a[text()=\"Курсы валют\"]", "//title", "Курсы валют на сегодня онлайн: курс покупки и продажи валюты"),
+                          ("//a[text()=\"Курсы валют\"]", "(//h1)[1]", "Курсы валют"),
                           ("//a[text()=\"Офисы\"]", "//h1", "Офисы и банкоматы"),
                           ("//a[text()=\"СберБанк Онлайн\"]", "//h1", "СберБанк"),
                           ("(//a[text()=\"Банкоматы\"])[2]", "//h1", "Офисы и банкоматы"),
