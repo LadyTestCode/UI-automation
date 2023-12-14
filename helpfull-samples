@@ -1,0 +1,88 @@
+//p[text()="Card"]
+(//p[text()="Bank"])[1]/following::p[1]
+
+//body/div/p[text()="Client"]
+//p[text()="Card"]/following::p[text()="Client"][1]
+
+(//div[text()="Bank"])[2]
+(//div[text()="Bank"])[1]/following::div[text()="Bank"][1]
+
+(//p[text()="Client"])[2]
+//div[text()="Bank"]/following::p[text()="Client"]
+
+(//div[text()="Sber"])[1]
+//p[text()="Client"]/following::div/p[text()="Client"]/following::div[1]/div[1]"
+
+(//div[text()="Bank"])[3]
+
+//div[@name="First"]
+(//div[text()="Bank"])[3]/following::div[text()="Bank"][1]
+
+//div[@id="bank_tag"]
+(//div[text()="Bank"])[3]/following::div[text()="Bank"][2]"
+
+(//div[text()="Sber"])[2]
+//div[@id="bank_tag"]/following::div/div[text()="Sber"]
+
+(//div)[14]
+//div[text()="Bank№1"]/parent::div/parent::div
+
+//div[text()="Bank№1"]
+//div[text()="Bank№2"]/parent::div/div[1]
+
+//div[text()="Bank№2"]
+//div[text()="Bank№1"]/parent::div/div[2]
+
+//span
+//body/span
+
+//input[@type="radio" and @id="contactChoice1"]
+//span/div/input[@id="contactChoice1"]
+
+(//label[@for="contactChoice1" and text()="Email"])[1]
+//span/div/label[@for="contactChoice1" and text()="Email"]
+
+//input[@type="radio" and @id="contactChoice2"]
+//span/div/input[@id="contactChoice2"]
+
+(//label[@for="contactChoice2" and text()="Phone"])[1]
+//span/div/label[@for="contactChoice2" and text()="Phone"]
+
+//input[@type="checkbox" and @id="contactChoice1"]
+(//div/input[@id="contactChoice1"])[2]
+
+(//label[text()="Email"])[2]
+//input[@type="checkbox" and @id="contactChoice2"]
+
+(//div/input[@id="contactChoice2"])[2]
+(//label[text()="Phone"])[2]
+
+
+--------------------------------------------------------------
+# Тест проверяет корректный поиск и выбор геопозиции
+@pytest.mark.full_regress
+@pytest.mark.smoke_testing
+@pytest.mark.parametrize('text',
+                          [
+                            "Санкт-Петербург",
+                            "Ростовская",
+                            "Республика Са",
+                            "Адыгея",
+                            "сахалин",
+                            "кРасНоДар"
+                          ]
+    ,
+                         ids=["City", "Region", "Part og region", "Region name", "Low letters", "Crazy letters"]
+                         )
+def test_check_geopostion(browser, text):
+    main_page = MainPage(browser, "http://www.sberbank.ru/")
+# Отрываем тестовую страницу
+    main_page.open()
+# Нажимаем на ссылку геопозиции
+    main_page.click_on_geoposition_link()
+# Вводим название региона
+    main_page.fill_text_region_name_field(text)
+# Нажимаем на ссылку названия региона
+    main_page.click_on_region_name_link(text)
+# Проверяем, что регион корректно выбран
+    main_page.assert_region_name_in_geo_link(text)
