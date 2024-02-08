@@ -15,6 +15,7 @@ from pages.main_page import MainPage
 
 #учебный тест для проверки главной страницы
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_elements_sber_main_page(browser):
     with allure.step("Учебный тест для проверки главной страницы"):
         try:
@@ -76,6 +77,7 @@ def test_elements_sber_main_page(browser):
 
 #тест - проверка наведения курсора мыши на объект
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_mouse_over_menu(browser):
     with allure.step("Tест - проверка наведения курсора мыши на объект"):
         try:
@@ -116,6 +118,7 @@ def test_mouse_over_menu(browser):
 
 # тест проверяет переключения на английский язык
 @pytest.mark.full_regression
+@pytest.mark.smoke_regression
 def test_change_language_sber_main_page(browser):
     with allure.step("Тест проверяет переключения на английский язык"):
         try:
@@ -134,6 +137,7 @@ def test_change_language_sber_main_page(browser):
 
 # тест проверяет поиск по слову Кредит и отсутствие вариантов поиска по сочетанию Кабриолет салатовый
 @pytest.mark.full_regression
+@pytest.mark.smoke_regression
 def test_check_search_sber_main_page(browser):
     with allure.step("Тест проверяет поиск по слову Кредит и отсутствие вариантов поиска по сочетанию Кабриолет салатовый"):
         try:
@@ -183,6 +187,7 @@ def test_check_search_sber_main_page(browser):
 
 #Домашнее задание: тест  на проверку скроллинга и переключения между вкладками.
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_change_tab_and_scroll(browser):
     with allure.step("Домашнее задание: тест  на проверку скроллинга и переключения между вкладками."):
         try:
@@ -221,6 +226,7 @@ def test_change_tab_and_scroll(browser):
 
 # тест проверки выбора геолокации
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 @pytest.mark.parametrize ('text',
     ["Санкт-Петербург"
     "Ростовская",
@@ -257,7 +263,7 @@ def test_incorrect_geoposition(browser):
     # Проверяем, что поиск пустой
     main_page.should_not_be_search_success_region_button()
 
-#тест для проверки перехода по ссылке меню - пробный - не для проверки!
+#тест для проверки перехода по ссылке меню - пробный кейс - не для запуска и проверки!
 @pytest.mark.full_regression
 def test_moving_menu_links_test(browser):
     with allure.step("Тест для проверки перехода по ссылке меню - пробный"):
@@ -280,8 +286,9 @@ def test_moving_menu_links_test(browser):
 
 #тест для проверки перехода по ссылкам - открытие правильной страницы - курсы валют
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_moving_menu_links_exchange(browser):
-   # with allure.step("Тест для проверки перехода по ссылке меню - пробный"):
+    with allure.step("Тест для проверки перехода по ссылке меню - пробный"):
         main_page = MainPage(browser, "http://www.sberbank.ru/")
         # Открываем тестируемую страницу
         main_page.open()
@@ -294,8 +301,9 @@ def test_moving_menu_links_exchange(browser):
 
 #тест для проверки перехода по ссылкам - открытие правильной страницы - офисы
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_moving_menu_links_offices(browser):
-    #with allure.step("Тест для проверки перехода по ссылкам - открытие правильной страницы - офисы"):
+    with allure.step("Тест для проверки перехода по ссылкам - открытие правильной страницы - офисы"):
         main_page = MainPage(browser, "http://www.sberbank.ru/")
         # Открываем тестируемую страницу
         main_page.open()
@@ -308,8 +316,9 @@ def test_moving_menu_links_offices(browser):
 
 #тест для проверки перехода по ссылкам - открытие правильной страницы - сбербанк онлайн
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_moving_menu_links_sbol(browser):
-   # with allure.step("Тест для проверки перехода по ссылкам - открытие правильной страницы - сбербанк онлайн"):
+    with allure.step("Тест для проверки перехода по ссылкам - открытие правильной страницы - сбербанк онлайн"):
        main_page = MainPage(browser, "http://www.sberbank.ru/")
        # Открываем тестируемую страницу
        main_page.open()
@@ -322,8 +331,9 @@ def test_moving_menu_links_sbol(browser):
 
 #тест для проверки перехода по ссылкам - открытие правильной страницы -банкоматы
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_moving_menu_links_atm(browser):
-    #with allure.step("Тест для проверки перехода по ссылкам - открытие правильной страницы -банкоматы"):
+    with allure.step("Тест для проверки перехода по ссылкам - открытие правильной страницы -банкоматы"):
         main_page = MainPage(browser, "http://www.sberbank.ru/")
         # Открываем тестируемую страницу
         main_page.open()
@@ -337,6 +347,7 @@ def test_moving_menu_links_atm(browser):
 
 #тест подсчета элементов на странице
 @pytest.mark.full_regression
+@pytest.mark.smoke_regression
 def test_count_links(browser):
     with allure.step("Тест подсчета элементов на странице"):
         main_page = MainPage(browser, "http://www.sberbank.ru/")
@@ -354,8 +365,9 @@ def test_count_links(browser):
 
 #тест для проверки изменения цвета ссылок при наведении мыши
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_color_link(browser):
-    #with allure.step("Изменение цвета ссылок"):
+    with allure.step("Изменение цвета ссылок"):
         main_page = MainPage(browser, "http://www.sberbank.ru/")
         # Отрываем тестируемую страницу
         main_page.open()
@@ -379,8 +391,9 @@ def test_color_link(browser):
 
 #Тест с проверками корректности заголовков страниц для сценария перехода между страницами
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 def test_correctness_of_headers_for_pages(browser):
-    # with allure.step("Тест с проверками корректности заголовков страниц для сценария перехода между страницами"):
+    with allure.step("Тест с проверками корректности заголовков страниц для сценария перехода между страницами"):
         main_page = MainPage(browser, "http://www.sberbank.ru/")
         # Отрываем тестируемую страницу
         main_page.open()
@@ -400,6 +413,7 @@ def test_correctness_of_headers_for_pages(browser):
 
 # тест проверяет корректность работы поиска
 @pytest.mark.smoke_regression
+@pytest.mark.full_regression
 @pytest.mark.parametrize ('searchtext',
     [("Вклад",1),
      ("Кредит",1),
@@ -420,7 +434,7 @@ def test_check_correct_search_sber_main_page(browser, text):
         time.sleep(5)
         # Проверяем, что открылось окно поиска()
         main_page.assert_search_field_title()
-        #открываем поисковую строку и вводим слово из параметров для поиска и нажимаем кнопку найти
+        # открываем поисковую строку и вводим слово из параметров для поиска и нажимаем кнопку найти
         main_page.click_on_search_field_link()
         main_page.write_word_in_search_field(seachtext)
         main_page.click_on_search_button()
